@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 
 REPORTS_DIR = "reports"
 HISTORY_PATH = os.path.join(REPORTS_DIR, "history.json")
-MAX_HISTORY = 30
+MAX_HISTORY = 5
 
 
 def parse_results():
@@ -22,11 +22,12 @@ def parse_results():
 def main():
     passed, failed, duration = parse_results()
     now = datetime.now(timezone.utc)
+    run_id = now.strftime("%Y-%m-%dT%H-%M-%S")
     date_str = now.strftime("%Y-%m-%d")
     timestamp = now.strftime("%Y-%m-%d %H:%M UTC")
 
     os.makedirs(REPORTS_DIR, exist_ok=True)
-    report_filename = f"{date_str}.html"
+    report_filename = f"{run_id}.html"
     shutil.copy("report.html", os.path.join(REPORTS_DIR, report_filename))
     shutil.copy("report.html", os.path.join(REPORTS_DIR, "latest.html"))
 
@@ -35,7 +36,6 @@ def main():
         with open(HISTORY_PATH) as f:
             history = json.load(f)
 
-    history = [entry for entry in history if entry["date"] != date_str]
     history.insert(0, {
         "date": date_str,
         "timestamp": timestamp,
@@ -44,7 +44,11 @@ def main():
         "duration": duration,
         "report": f"reports/{report_filename}",
     })
-    history = history[:MAX_HISTORY]
+
+    while len(history) > MAX_HISTORY:
+        dropped = history.pop()
+        if os.path.exists(dropped["report"]):
+            os.remove(dropped["report"])
 
     with open(HISTORY_PATH, "w") as f:
         json.dump(history, f, indent=2)

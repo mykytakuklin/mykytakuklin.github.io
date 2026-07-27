@@ -423,11 +423,11 @@
 
         var body = document.getElementById("history-body");
         body.innerHTML = "";
-        history.slice(0, 14).forEach(function (run) {
+        history.slice(0, 5).forEach(function (run) {
           var passed = run.failed === 0;
           var row = document.createElement("tr");
           row.innerHTML =
-            "<td>" + run.date + "</td>" +
+            "<td>" + run.timestamp + "</td>" +
             "<td class=\"status " + (passed ? "pass" : "fail") + "\">" + (passed ? "PASS" : "FAIL") + "</td>" +
             "<td>" + run.duration + "s</td>" +
             "<td class=\"view\"><a href=\"" + run.report + "\" target=\"_blank\" rel=\"noopener\">view</a></td>";

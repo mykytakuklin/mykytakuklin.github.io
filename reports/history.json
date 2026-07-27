@@ -1,6 +1,14 @@
 [
   {
     "date": "2026-07-27",
+    "timestamp": "2026-07-27 12:43 UTC",
+    "passed": 29,
+    "failed": 0,
+    "duration": 22,
+    "report": "reports/2026-07-27T12-43-21/report.html"
+  },
+  {
+    "date": "2026-07-27",
     "timestamp": "2026-07-27 12:40 UTC",
     "passed": 29,
     "failed": 0,

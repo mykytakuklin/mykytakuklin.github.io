@@ -29,6 +29,7 @@ def pytest_runtest_makereport(item, call):
             try:
                 screenshot = base64.b64encode(page.screenshot()).decode("ascii")
                 extra.append(extras.image(screenshot, mime_type="image/png"))
+                extra.append(extras.url(page.url, name=page.url))
             except Exception:
                 pass
 

@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mykyta Kuklin — QA Engineer</title>
+<meta name="description" content="QA Engineer portfolio — manual testing experience and a daily-running Playwright automation suite.">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --fg: #16150F;
+    --muted: #6E6A61;
+    --border: #DEDAD1;
+    --panel: #FAF9F6;
+    --pass: #1C6B34;
+    --fail: #A8291D;
+  }
+  /* Deliberately single-theme: white/black, fixed regardless of system or browser dark-mode preference. */
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 88px 24px 120px;
+  }
+
+  ::selection { background: var(--fg); color: var(--bg); }
+
+  a { color: var(--fg); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+  h1, h2 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    font-weight: 500;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .mono {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+  }
+
+  /* ---- Hero ---- */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .hero h1 { font-size: 2.6rem; letter-spacing: -0.01em; }
+  .hero .role {
+    font-size: 1.05rem;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .hero .tagline {
+    max-width: 58ch;
+    font-size: 1.02rem;
+    color: var(--fg);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .links a {
+    text-decoration: none;
+    font-size: 0.86rem;
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 16px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .links a:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .links a.primary {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .links a.primary:hover { opacity: 0.82; background: var(--fg); color: var(--bg); }
+
+  /* ---- Section rhythm ---- */
+  section {
+    padding: 56px 0;
+    border-top: 1px solid var(--border);
+  }
+  .hero { border-top: none; padding-top: 0; padding-bottom: 56px; }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+
+  section > p { max-width: 62ch; }
+
+  /* ---- Skills ---- */
+  .skill-group { margin-bottom: 16px; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-group .label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    width: 132px;
+    flex-shrink: 0;
+  }
+  .skill-row { display: flex; gap: 18px; align-items: baseline; flex-wrap: wrap; }
+  .skill-row .tags { display: flex; flex-wrap: wrap; gap: 7px 10px; }
+  .tag {
+    font-size: 0.86rem;
+  }
+  .tag:not(:last-child)::after { content: "·"; color: var(--border); margin-left: 10px; }
+
+  /* ---- Experience ---- */
+  .job {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 4px 24px;
+    padding: 18px 0;
+  }
+  .job:first-child { padding-top: 0; }
+  .job + .job { border-top: 1px solid var(--border); }
+  .job .period { font-size: 0.8rem; color: var(--muted); padding-top: 3px; }
+  .job .role { font-weight: 600; font-size: 1rem; }
+  .job .company { color: var(--muted); font-size: 0.92rem; }
+  .job .highlight { margin-top: 6px; font-size: 0.94rem; }
+  .resume-link { margin-top: 22px; font-size: 0.88rem; }
+  .resume-link a { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---- Automation panel ---- */
+  .automation-lede { max-width: 62ch; margin-bottom: 28px; }
+
+  .status-panel {
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 4px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .status-panel .meta { font-size: 0.82rem; color: var(--muted); }
+  .status-panel .meta .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--pass);
+    margin-right: 7px;
+    position: relative;
+    top: -1px;
+  }
+  .status-panel .meta .dot.fail { background: var(--fail); }
+  .status-panel .counts {
+    display: flex;
+    gap: 18px;
+    font-size: 0.95rem;
+    margin-top: 6px;
+  }
+  .status-panel .counts b { font-weight: 700; }
+  .status-panel .counts .pass { color: var(--pass); }
+  .status-panel .counts .fail { color: var(--fail); }
+  .status-panel .cta {
+    text-decoration: none;
+    font-size: 0.86rem;
+    border: 1px solid var(--fg);
+    border-radius: 999px;
+    padding: 8px 18px;
+    white-space: nowrap;
+  }
+  .status-panel .cta:hover { background: var(--fg); color: var(--bg); }
+
+  .placeholder-note {
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  .history {
+    margin-top: 34px;
+    overflow-x: auto;
+  }
+  .history .caption {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 460px;
+    font-size: 0.88rem;
+  }
+  thead th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--muted);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0 12px 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.status.pass { color: var(--pass); }
+  td.status.fail { color: var(--fail); }
+  td.view a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+
+  .source-link { margin-top: 24px; font-size: 0.86rem; }
+  .source-link a { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---- Footer ---- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+    margin-top: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  footer .links { margin-top: 0; }
+  footer .links a { font-size: 0.8rem; padding: 5px 13px; }
+
+  @media (max-width: 560px) {
+    .page { padding: 56px 18px 80px; }
+    .hero h1 { font-size: 2.1rem; }
+    .job { grid-template-columns: 1fr; }
+    .job .period { padding-top: 0; }
+    .status-panel { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <section class="hero">
+    <div>
+      <h1>Mykyta Kuklin</h1>
+      <div class="role">QA Engineer</div>
+    </div>
+    <p class="tagline">5+ years testing web and mobile applications across energy, fintech, and e‑commerce. Currently building test automation skills with Playwright and Python — the project below runs itself, every day, without me touching it.</p>
+    <div class="links">
+      <a href="mailto:mykytakuklin@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/mykyta-kuklin/">LinkedIn</a>
+      <a href="https://t.me/mykytakuklin">Telegram</a>
+      <a href="https://github.com/mykytakuklin">GitHub</a>
+      <a class="primary" href="resume.pdf">Download Resume (PDF)</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <p class="eyebrow">About</p>
+    <p>QA Engineer with 5+ years of experience in manual testing of web and mobile applications. I cover the full QA cycle — writing test plans and cases from scratch, functional, regression, smoke, and integration testing, API testing, and bug tracking. On my current project I'm the sole QA responsible for Flutter mobile testing across iOS and Android.</p>
+  </section>
+
+  <section id="skills">
+    <p class="eyebrow">Core skills</p>
+    <div class="skill-group">
+      <div class="skill-row">
+        <span class="label">Testing</span>
+        <span class="tags">
+          <span class="tag">Functional</span><span class="tag">Regression</span><span class="tag">Smoke</span><span class="tag">Integration</span><span class="tag">API Testing</span>
+        </span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-row">
+        <span class="label">Platforms</span>
+        <span class="tags">
+          <span class="tag">Web</span><span class="tag">iOS (TestFlight)</span><span class="tag">Android (APK)</span>
+        </span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-row">
+        <span class="label">Tools</span>
+        <span class="tags">
+          <span class="tag">Jira</span><span class="tag">TestRail</span><span class="tag">Postman</span><span class="tag">Swagger</span><span class="tag">Git</span><span class="tag">Jenkins</span>
+        </span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-row">
+        <span class="label">Automation</span>
+        <span class="tags">
+          <span class="tag">Playwright</span><span class="tag">Python</span><span class="tag">pytest</span><span class="tag">GitHub Actions</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <p class="eyebrow">Experience</p>
+
+    <div class="job">
+      <div class="period">Aug 2025 – Present</div>
+      <div>
+        <div class="role">QA Engineer</div>
+        <div class="company">SDH — FieldHub</div>
+        <div class="highlight">Sole QA responsible for Flutter mobile testing (iOS + Android); authored the test plan for the product's first full regression cycle.</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="period">Jul 2022 – Jun 2025</div>
+      <div>
+        <div class="role">QA Engineer</div>
+        <div class="company">SIGMA</div>
+        <div class="highlight">Sole QA on a pilot project — built the testing process from scratch; full regression for a version 2.0 core redesign.</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="period">Dec 2021 – May 2022</div>
+      <div>
+        <div class="role">QA Engineer</div>
+        <div class="company">Bell Integrator</div>
+        <div class="highlight">Tested a banking web application; verified data via REST requests and direct database queries.</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="period">Jul 2021 – Nov 2021</div>
+      <div>
+        <div class="role">QA Engineer</div>
+        <div class="company">AllForDJ</div>
+        <div class="highlight">Tested an e‑commerce storefront (checkout, search, cart) and its admin/CMS panel.</div>
+      </div>
+    </div>
+
+    <p class="resume-link"><a href="resume.pdf">View full resume →</a></p>
+  </section>
+
+  <section id="automation">
+    <p class="eyebrow">Test automation in action</p>
+    <p class="automation-lede">I write and maintain a Playwright (Python) test suite against <a href="https://www.saucedemo.com/">saucedemo.com</a>, a public QA practice site. A GitHub Actions workflow runs the full suite every day and publishes the result below — not a one‑off screenshot, but a pipeline that keeps running whether or not I'm watching it.</p>
+
+    <div class="status-panel" id="status-panel">
+      <div>
+        <div class="meta"><span class="dot"></span><span id="status-meta">Last run — 2026-07-27 06:00 UTC</span></div>
+        <div class="counts mono">
+          <span class="pass" id="status-passed"><b>18</b> passed</span>
+          <span class="fail" id="status-failed"><b>0</b> failed</span>
+          <span class="muted" id="status-duration">42s</span>
+        </div>
+      </div>
+      <a class="cta" id="status-report-link" href="#">View latest report →</a>
+    </div>
+    <p class="placeholder-note" id="placeholder-note">Example data shown for layout review — this panel will read live from the daily pipeline once it's wired up.</p>
+
+    <div class="history">
+      <p class="caption">Run history</p>
+      <table class="mono">
+        <thead>
+          <tr><th>Date</th><th>Status</th><th>Duration</th><th></th></tr>
+        </thead>
+        <tbody id="history-body">
+          <tr><td>2026-07-27</td><td class="status pass">PASS</td><td>42s</td><td class="view"><a href="#">view</a></td></tr>
+          <tr><td>2026-07-26</td><td class="status pass">PASS</td><td>39s</td><td class="view"><a href="#">view</a></td></tr>
+          <tr><td>2026-07-25</td><td class="status fail">FAIL</td><td>51s</td><td class="view"><a href="#">view</a></td></tr>
+          <tr><td>2026-07-24</td><td class="status pass">PASS</td><td>40s</td><td class="view"><a href="#">view</a></td></tr>
+          <tr><td>2026-07-23</td><td class="status pass">PASS</td><td>41s</td><td class="view"><a href="#">view</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="source-link"><a href="https://github.com/mykytakuklin/mykytakuklin.github.io">View source on GitHub →</a></p>
+  </section>
+
+  <footer>
+    <div>mykytakuklin@gmail.com</div>
+    <div class="links">
+      <a href="https://www.linkedin.com/in/mykyta-kuklin/">LinkedIn</a>
+      <a href="https://t.me/mykytakuklin">Telegram</a>
+      <a href="https://github.com/mykytakuklin">GitHub</a>
+    </div>
+  </footer>
+
+</div>
+<script>
+  (function () {
+    fetch("reports/history.json", { cache: "no-store" })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (history) {
+        if (!history || !history.length) return;
+
+        var latest = history[0];
+        document.getElementById("status-meta").textContent = "Last run — " + latest.timestamp;
+        document.getElementById("status-passed").innerHTML = "<b>" + latest.passed + "</b> passed";
+        document.getElementById("status-failed").innerHTML = "<b>" + latest.failed + "</b> failed";
+        document.getElementById("status-duration").textContent = latest.duration + "s";
+        document.getElementById("status-report-link").href = latest.report;
+        var dot = document.querySelector("#status-panel .dot");
+        if (latest.failed > 0) dot.classList.add("fail");
+
+        var body = document.getElementById("history-body");
+        body.innerHTML = "";
+        history.slice(0, 14).forEach(function (run) {
+          var passed = run.failed === 0;
+          var row = document.createElement("tr");
+          row.innerHTML =
+            "<td>" + run.date + "</td>" +
+            "<td class=\"status " + (passed ? "pass" : "fail") + "\">" + (passed ? "PASS" : "FAIL") + "</td>" +
+            "<td>" + run.duration + "s</td>" +
+            "<td class=\"view\"><a href=\"" + run.report + "\">view</a></td>";
+          body.appendChild(row);
+        });
+
+        document.getElementById("placeholder-note").remove();
+      })
+      .catch(function () { /* keep placeholder data if reports/history.json isn't published yet */ });
+  })();
+</script>
+</body>
+</html>

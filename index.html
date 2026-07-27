@@ -372,7 +372,7 @@
           <span class="muted" id="status-duration">42s</span>
         </div>
       </div>
-      <a class="cta" id="status-report-link" href="#">View latest report →</a>
+      <a class="cta" id="status-report-link" href="#" target="_blank" rel="noopener">View latest report →</a>
     </div>
     <p class="placeholder-note" id="placeholder-note">Example data shown for layout review — this panel will read live from the daily pipeline once it's wired up.</p>
 
@@ -383,11 +383,11 @@
           <tr><th>Date</th><th>Status</th><th>Duration</th><th></th></tr>
         </thead>
         <tbody id="history-body">
-          <tr><td>2026-07-27</td><td class="status pass">PASS</td><td>42s</td><td class="view"><a href="#">view</a></td></tr>
-          <tr><td>2026-07-26</td><td class="status pass">PASS</td><td>39s</td><td class="view"><a href="#">view</a></td></tr>
-          <tr><td>2026-07-25</td><td class="status fail">FAIL</td><td>51s</td><td class="view"><a href="#">view</a></td></tr>
-          <tr><td>2026-07-24</td><td class="status pass">PASS</td><td>40s</td><td class="view"><a href="#">view</a></td></tr>
-          <tr><td>2026-07-23</td><td class="status pass">PASS</td><td>41s</td><td class="view"><a href="#">view</a></td></tr>
+          <tr><td>2026-07-27</td><td class="status pass">PASS</td><td>42s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
+          <tr><td>2026-07-26</td><td class="status pass">PASS</td><td>39s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
+          <tr><td>2026-07-25</td><td class="status fail">FAIL</td><td>51s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
+          <tr><td>2026-07-24</td><td class="status pass">PASS</td><td>40s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
+          <tr><td>2026-07-23</td><td class="status pass">PASS</td><td>41s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
         </tbody>
       </table>
     </div>
@@ -430,7 +430,7 @@
             "<td>" + run.date + "</td>" +
             "<td class=\"status " + (passed ? "pass" : "fail") + "\">" + (passed ? "PASS" : "FAIL") + "</td>" +
             "<td>" + run.duration + "s</td>" +
-            "<td class=\"view\"><a href=\"" + run.report + "\">view</a></td>";
+            "<td class=\"view\"><a href=\"" + run.report + "\" target=\"_blank\" rel=\"noopener\">view</a></td>";
           body.appendChild(row);
         });
 

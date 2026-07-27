@@ -48,9 +48,12 @@ def main():
 
     while len(history) > MAX_HISTORY:
         dropped = history.pop()
-        dropped_dir = os.path.dirname(dropped["report"])
-        if os.path.isdir(dropped_dir):
+        dropped_path = dropped["report"]
+        dropped_dir = os.path.dirname(dropped_path)
+        if dropped_dir and dropped_dir != REPORTS_DIR and os.path.isdir(dropped_dir):
             shutil.rmtree(dropped_dir)
+        elif os.path.isfile(dropped_path):
+            os.remove(dropped_path)
 
     with open(HISTORY_PATH, "w") as f:
         json.dump(history, f, indent=2)

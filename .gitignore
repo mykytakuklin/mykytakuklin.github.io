@@ -3,7 +3,7 @@ __pycache__/
 .venv/
 venv/
 test-results/
-report.html
+/report.html
 /assets
-results.xml
+/results.xml
 .DS_Store

@@ -4,5 +4,6 @@ __pycache__/
 venv/
 test-results/
 report.html
+/assets
 results.xml
 .DS_Store

@@ -26,10 +26,11 @@ def main():
     date_str = now.strftime("%Y-%m-%d")
     timestamp = now.strftime("%Y-%m-%d %H:%M UTC")
 
-    os.makedirs(REPORTS_DIR, exist_ok=True)
-    report_filename = f"{run_id}.html"
-    shutil.copy("report.html", os.path.join(REPORTS_DIR, report_filename))
-    shutil.copy("report.html", os.path.join(REPORTS_DIR, "latest.html"))
+    run_dir = os.path.join(REPORTS_DIR, run_id)
+    os.makedirs(run_dir, exist_ok=True)
+    shutil.copy("report.html", os.path.join(run_dir, "report.html"))
+    if os.path.isdir("assets"):
+        shutil.copytree("assets", os.path.join(run_dir, "assets"))
 
     history = []
     if os.path.exists(HISTORY_PATH):
@@ -42,13 +43,14 @@ def main():
         "passed": passed,
         "failed": failed,
         "duration": duration,
-        "report": f"reports/{report_filename}",
+        "report": f"reports/{run_id}/report.html",
     })
 
     while len(history) > MAX_HISTORY:
         dropped = history.pop()
-        if os.path.exists(dropped["report"]):
-            os.remove(dropped["report"])
+        dropped_dir = os.path.dirname(dropped["report"])
+        if os.path.isdir(dropped_dir):
+            shutil.rmtree(dropped_dir)
 
     with open(HISTORY_PATH, "w") as f:
         json.dump(history, f, indent=2)

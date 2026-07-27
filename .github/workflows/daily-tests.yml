@@ -26,7 +26,7 @@ jobs:
           playwright install --with-deps chromium
 
       - name: Run tests
-        run: pytest --html=report.html --self-contained-html --junitxml=results.xml -v
+        run: pytest --html=report.html --junitxml=results.xml -v
         continue-on-error: true
 
       - name: Build history and copy report

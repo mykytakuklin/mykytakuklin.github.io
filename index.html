@@ -3,22 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mykyta Kuklin — QA Engineer</title>
-<meta name="description" content="QA Engineer portfolio — manual testing experience and a daily-running Playwright automation suite.">
+<title>Mykyta Kuklin - QA Engineer</title>
+<meta name="description" content="QA Engineer portfolio - manual testing experience and a daily-running Playwright automation suite.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F2F3F0;
-    --fg: #111111;
-    --muted: #666666;
-    --border: #CBCCC9;
-    --panel: #FFFFFF;
+    --bg: #111111;
+    --fg: #FFFFFF;
+    --muted: #B8B9B6;
+    --border: #2E2E2E;
+    --panel: #1A1A1A;
     --primary: #FF8400;
     --primary-fg: #111111;
-    --secondary: #E7E8E5;
-    --pass-bg: #DFE6E1;
-    --pass-fg: #004D1A;
-    --fail-bg: #E5DCDA;
-    --fail-fg: #8C1C00;
+    --secondary: #2E2E2E;
+    --pass-bg: #222924;
+    --pass-fg: #B6FFCE;
+    --fail-bg: #24100B;
+    --fail-fg: #FF5C33;
     --font-display: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
     --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     --radius-m: 16px;
@@ -32,7 +35,7 @@
     background: var(--bg);
     color: var(--fg);
     font-family: var(--font-body);
-    font-size: 20px;
+    font-size: 17px;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
@@ -40,7 +43,7 @@
   .page {
     max-width: 760px;
     margin: 0 auto;
-    padding: 88px 24px 120px;
+    padding: 64px 24px 96px;
   }
 
   ::selection { background: var(--fg); color: var(--bg); }
@@ -63,9 +66,9 @@
   .hero {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 20px;
   }
-  .hero h1 { font-size: 2.6rem; letter-spacing: -0.01em; }
+  .hero h1 { font-size: 2.4rem; letter-spacing: -0.01em; }
   .hero .role {
     font-size: 1.05rem;
     color: var(--muted);
@@ -103,17 +106,27 @@
 
   /* ---- Section rhythm ---- */
   section {
-    padding: 56px 0;
+    padding: 48px 0;
     border-top: 1px solid var(--border);
   }
-  .hero { border-top: none; padding-top: 0; padding-bottom: 56px; }
+  .hero { border-top: none; padding-top: 0; padding-bottom: 48px; }
 
   .eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--muted);
     margin: 0 0 18px;
+  }
+  .eyebrow svg {
+    width: 14px;
+    height: 14px;
+    color: var(--muted);
+    flex-shrink: 0;
   }
 
   section > p { max-width: 62ch; }
@@ -146,9 +159,15 @@
   .job .period { font-size: 0.8rem; color: var(--muted); padding-top: 3px; }
   .job .role { font-weight: 600; font-size: 1rem; }
   .job .company { color: var(--muted); font-size: 0.92rem; }
-  .job .highlight { margin-top: 6px; font-size: 0.94rem; }
+  .job .highlight { margin-top: 6px; font-size: 0.94rem; line-height: 1.45; }
   .resume-link { margin-top: 22px; font-size: 0.88rem; }
   .resume-link a { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---- Education ---- */
+  .edu-item { margin-bottom: 14px; }
+  .edu-item:last-child { margin-bottom: 0; }
+  .edu-item .school { font-weight: 600; font-size: 0.96rem; }
+  .edu-item .degree { color: var(--muted); font-size: 0.86rem; font-style: italic; margin-top: 2px; }
 
   /* ---- Automation panel ---- */
   .automation-lede { max-width: 62ch; margin-bottom: 28px; }
@@ -180,6 +199,7 @@
     gap: 10px;
     font-size: 0.9rem;
     margin-top: 8px;
+    align-items: center;
   }
   .status-panel .counts b { font-weight: 700; }
   .status-panel .counts .pass, .status-panel .counts .fail {
@@ -188,7 +208,7 @@
   }
   .status-panel .counts .pass { background: var(--pass-bg); color: var(--pass-fg); }
   .status-panel .counts .fail { background: var(--fail-bg); color: var(--fail-fg); }
-  .status-panel .counts .muted { align-self: center; }
+  .status-panel .counts .muted { color: var(--muted); }
   .status-panel .cta {
     text-decoration: none;
     font-size: 0.86rem;
@@ -240,12 +260,14 @@
     font-variant-numeric: tabular-nums;
   }
   tbody tr:last-child td { border-bottom: none; }
-  td.status.pass, td.status.fail {
+  .badge {
+    display: inline-block;
     font-weight: 700;
+    padding: 3px 10px;
     border-radius: 999px;
   }
-  td.status.pass { color: var(--pass-fg); }
-  td.status.fail { color: var(--fail-fg); }
+  .badge.pass { background: var(--pass-bg); color: var(--pass-fg); }
+  .badge.fail { background: var(--fail-bg); color: var(--fail-fg); }
   td.view a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
 
   .source-link { margin-top: 24px; font-size: 0.86rem; }
@@ -255,7 +277,7 @@
   footer {
     border-top: 1px solid var(--border);
     padding-top: 32px;
-    margin-top: 56px;
+    margin-top: 48px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -268,8 +290,8 @@
   footer .links a { font-size: 0.8rem; padding: 5px 13px; }
 
   @media (max-width: 560px) {
-    .page { padding: 56px 18px 80px; }
-    .hero h1 { font-size: 2.1rem; }
+    .page { padding: 48px 18px 72px; }
+    .hero h1 { font-size: 2rem; }
     .job { grid-template-columns: 1fr; }
     .job .period { padding-top: 0; }
     .status-panel { flex-direction: column; align-items: flex-start; }
@@ -288,7 +310,7 @@
       <h1>Mykyta Kuklin</h1>
       <div class="role">QA Engineer</div>
     </div>
-    <p class="tagline">5+ years testing web and mobile applications across energy, fintech, and e‑commerce. Currently building test automation skills with Playwright and Python — the project below runs itself, every day, without me touching it.</p>
+    <p class="tagline">5+ years across web and mobile in energy, fintech, and e-commerce, covering the full QA cycle end to end. Sole QA for Flutter mobile testing (iOS + Android), now building test automation with Playwright and Python.</p>
     <div class="links">
       <a href="mailto:mykytakuklin@gmail.com" target="_blank" rel="noopener">Email</a>
       <a href="https://www.linkedin.com/in/mykyta-kuklin/" target="_blank" rel="noopener">LinkedIn</a>
@@ -298,18 +320,13 @@
     </div>
   </section>
 
-  <section id="about">
-    <p class="eyebrow">About</p>
-    <p>QA Engineer with 5+ years of experience in manual testing of web and mobile applications. I cover the full QA cycle — writing test plans and cases from scratch, functional, regression, smoke, and integration testing, API testing, and bug tracking. On my current project I'm the sole QA responsible for Flutter mobile testing across iOS and Android.</p>
-  </section>
-
   <section id="skills">
-    <p class="eyebrow">Core skills</p>
+    <p class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Core skills</p>
     <div class="skill-group">
       <div class="skill-row">
         <span class="label">Testing</span>
         <span class="tags">
-          <span class="tag">Functional</span><span class="tag">Regression</span><span class="tag">Smoke</span><span class="tag">Integration</span><span class="tag">API Testing</span>
+          <span class="tag">Functional</span><span class="tag">Regression</span><span class="tag">Smoke</span><span class="tag">Integration</span><span class="tag">API Testing</span><span class="tag">UI/UX Testing</span>
         </span>
       </div>
     </div>
@@ -325,7 +342,15 @@
       <div class="skill-row">
         <span class="label">Tools</span>
         <span class="tags">
-          <span class="tag">Jira</span><span class="tag">TestRail</span><span class="tag">Postman</span><span class="tag">Swagger</span><span class="tag">Git</span><span class="tag">Jenkins</span>
+          <span class="tag">Jira</span><span class="tag">TestRail</span><span class="tag">Postman</span><span class="tag">Swagger</span><span class="tag">Chrome DevTools</span><span class="tag">Fiddler</span><span class="tag">Git</span><span class="tag">Jenkins</span>
+        </span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-row">
+        <span class="label">Monitoring</span>
+        <span class="tags">
+          <span class="tag">Kibana</span><span class="tag">Sentry</span>
         </span>
       </div>
     </div>
@@ -333,70 +358,28 @@
       <div class="skill-row">
         <span class="label">Automation</span>
         <span class="tags">
-          <span class="tag">Playwright</span><span class="tag">Python</span><span class="tag">pytest</span><span class="tag">GitHub Actions</span>
+          <span class="tag">Playwright</span><span class="tag">Python</span><span class="tag">pytest</span><span class="tag">GitHub Actions</span><span class="tag">Claude Code</span>
         </span>
       </div>
     </div>
   </section>
 
-  <section id="experience">
-    <p class="eyebrow">Experience</p>
-
-    <div class="job">
-      <div class="period">Aug 2025 – Present</div>
-      <div>
-        <div class="role">QA Engineer</div>
-        <div class="company">SDH — FieldHub</div>
-        <div class="highlight">Sole QA responsible for Flutter mobile testing (iOS + Android); authored the test plan for the product's first full regression cycle.</div>
-      </div>
-    </div>
-
-    <div class="job">
-      <div class="period">Jul 2022 – Jun 2025</div>
-      <div>
-        <div class="role">QA Engineer</div>
-        <div class="company">SIGMA</div>
-        <div class="highlight">Sole QA on a pilot project — built the testing process from scratch; full regression for a version 2.0 core redesign.</div>
-      </div>
-    </div>
-
-    <div class="job">
-      <div class="period">Dec 2021 – May 2022</div>
-      <div>
-        <div class="role">QA Engineer</div>
-        <div class="company">Bell Integrator</div>
-        <div class="highlight">Tested a banking web application; verified data via REST requests and direct database queries.</div>
-      </div>
-    </div>
-
-    <div class="job">
-      <div class="period">Jul 2021 – Nov 2021</div>
-      <div>
-        <div class="role">QA Engineer</div>
-        <div class="company">AllForDJ</div>
-        <div class="highlight">Tested an e‑commerce storefront (checkout, search, cart) and its admin/CMS panel.</div>
-      </div>
-    </div>
-
-    <p class="resume-link"><a href="resume.pdf" target="_blank" rel="noopener">View full resume →</a></p>
-  </section>
-
   <section id="automation">
-    <p class="eyebrow">Test automation in action</p>
-    <p class="automation-lede">I write and maintain a Playwright (Python) test suite against <a href="https://www.saucedemo.com/" target="_blank" rel="noopener">saucedemo.com</a>, a public QA practice site. A GitHub Actions workflow runs the full suite every day and publishes the result below — not a one‑off screenshot, but a pipeline that keeps running whether or not I'm watching it.</p>
+    <p class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>Test automation in action</p>
+    <p class="automation-lede">I write and maintain a Playwright (Python) test suite against <a href="https://www.saucedemo.com/" target="_blank" rel="noopener">saucedemo.com</a>, a public QA practice site. A GitHub Actions workflow runs the full suite every day and publishes the result below - not a one-off screenshot, but a pipeline that keeps running whether or not I'm watching it.</p>
 
     <div class="status-panel" id="status-panel">
       <div>
-        <div class="meta"><span class="dot"></span><span id="status-meta">Last run — 2026-07-27 06:00 UTC</span></div>
+        <div class="meta"><span class="dot"></span><span id="status-meta">Last run - 2026-07-27 13:33 UTC</span></div>
         <div class="counts mono">
-          <span class="pass" id="status-passed"><b>18</b> passed</span>
+          <span class="pass" id="status-passed"><b>29</b> passed</span>
           <span class="fail" id="status-failed"><b>0</b> failed</span>
-          <span class="muted" id="status-duration">42s</span>
+          <span class="muted" id="status-duration">21s</span>
         </div>
       </div>
       <a class="cta" id="status-report-link" href="#" target="_blank" rel="noopener">View latest report →</a>
     </div>
-    <p class="placeholder-note" id="placeholder-note">Example data shown for layout review — this panel will read live from the daily pipeline once it's wired up.</p>
+    <p class="placeholder-note" id="placeholder-note">Example data shown for layout review - this panel will read live from the daily pipeline once it's wired up.</p>
 
     <div class="history">
       <p class="caption">Run history</p>
@@ -405,16 +388,70 @@
           <tr><th>Date</th><th>Status</th><th>Duration</th><th></th></tr>
         </thead>
         <tbody id="history-body">
-          <tr><td>2026-07-27</td><td class="status pass">PASS</td><td>42s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
-          <tr><td>2026-07-26</td><td class="status pass">PASS</td><td>39s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
-          <tr><td>2026-07-25</td><td class="status fail">FAIL</td><td>51s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
-          <tr><td>2026-07-24</td><td class="status pass">PASS</td><td>40s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
-          <tr><td>2026-07-23</td><td class="status pass">PASS</td><td>41s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
+          <tr><td>2026-07-27 13:33 UTC</td><td><span class="badge pass">PASS</span></td><td>21s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
+          <tr><td>2026-07-27 12:43 UTC</td><td><span class="badge pass">PASS</span></td><td>22s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
+          <tr><td>2026-07-27 12:40 UTC</td><td><span class="badge pass">PASS</span></td><td>23s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
+          <tr><td>2026-07-27 12:24 UTC</td><td><span class="badge pass">PASS</span></td><td>21s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
+          <tr><td>2026-07-27 12:17 UTC</td><td><span class="badge pass">PASS</span></td><td>23s</td><td class="view"><a href="#" target="_blank" rel="noopener">view</a></td></tr>
         </tbody>
       </table>
     </div>
 
     <p class="source-link"><a href="https://github.com/mykytakuklin/mykytakuklin.github.io" target="_blank" rel="noopener">View source on GitHub →</a></p>
+  </section>
+
+  <section id="experience">
+    <p class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>Experience</p>
+
+    <div class="job">
+      <div class="period">Aug 2025 - Present</div>
+      <div>
+        <div class="role">QA Engineer</div>
+        <div class="company">SDH - FieldHub</div>
+        <div class="highlight">Testing web and mobile applications (iOS and Android), writing test cases and test plans from scratch. Sole QA engineer responsible for Flutter mobile testing, and created the test plan for the product's first full-scale regression cycle.</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="period">Jul 2022 - Jun 2025</div>
+      <div>
+        <div class="role">QA Engineer</div>
+        <div class="company">SIGMA</div>
+        <div class="highlight">Tested the web application and Android mobile app across the full QA cycle. When the product went through a comprehensive redesign for version 2.0, I tested new modules and led full regression testing throughout the rebuild. Also served as sole QA on a pilot project, building the testing process from scratch and working closely with developers from the design stage.</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="period">Dec 2021 - May 2022</div>
+      <div>
+        <div class="role">QA Engineer</div>
+        <div class="company">Bell Integrator</div>
+        <div class="highlight">Tested a banking web application; verified data via REST requests and direct database queries.</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="period">Jul 2021 - Nov 2021</div>
+      <div>
+        <div class="role">QA Engineer</div>
+        <div class="company">AllForDJ</div>
+        <div class="highlight">Tested an e-commerce storefront (checkout, search, cart) and its admin/CMS panel.</div>
+      </div>
+    </div>
+
+    <p class="resume-link"><a href="resume.pdf" target="_blank" rel="noopener">View full resume →</a></p>
+  </section>
+
+  <section id="education">
+    <p class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>Education</p>
+    <div class="edu-item">
+      <div class="school">Energy College of the Classical Private University, Energodar, Ukraine</div>
+      <div class="degree">Special Education (Information Technology) | 2015</div>
+    </div>
+    <div class="edu-item">
+      <div class="school">State Educational Institution "Zaporizhzhia Higher Vocational School Motor Builder", Zaporizhzhia, Ukraine</div>
+      <div class="degree">Secondary Special Education (Electrical and Electronics Engineering) | 2015</div>
+    </div>
   </section>
 
   <footer>
@@ -435,7 +472,7 @@
         if (!history || !history.length) return;
 
         var latest = history[0];
-        document.getElementById("status-meta").textContent = "Last run — " + latest.timestamp;
+        document.getElementById("status-meta").textContent = "Last run - " + latest.timestamp;
         document.getElementById("status-passed").innerHTML = "<b>" + latest.passed + "</b> passed";
         document.getElementById("status-failed").innerHTML = "<b>" + latest.failed + "</b> failed";
         document.getElementById("status-duration").textContent = latest.duration + "s";
@@ -450,7 +487,7 @@
           var row = document.createElement("tr");
           row.innerHTML =
             "<td>" + run.timestamp + "</td>" +
-            "<td class=\"status " + (passed ? "pass" : "fail") + "\">" + (passed ? "PASS" : "FAIL") + "</td>" +
+            "<td><span class=\"badge " + (passed ? "pass" : "fail") + "\">" + (passed ? "PASS" : "FAIL") + "</span></td>" +
             "<td>" + run.duration + "s</td>" +
             "<td class=\"view\"><a href=\"" + run.report + "\" target=\"_blank\" rel=\"noopener\">view</a></td>";
           body.appendChild(row);

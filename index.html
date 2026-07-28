@@ -137,10 +137,8 @@
   .skill-group .label {
     font-size: 0.78rem;
     color: var(--muted);
-    width: 132px;
-    flex-shrink: 0;
   }
-  .skill-row { display: flex; gap: 18px; align-items: baseline; flex-wrap: wrap; }
+  .skill-row { display: grid; grid-template-columns: 132px 1fr; gap: 4px 18px; align-items: baseline; }
   .skill-row .tags { display: flex; flex-wrap: wrap; gap: 7px 10px; }
   .tag {
     font-size: 0.86rem;
@@ -294,6 +292,7 @@
     .hero h1 { font-size: 2rem; }
     .job { grid-template-columns: 1fr; }
     .job .period { padding-top: 0; }
+    .skill-row { grid-template-columns: 1fr; gap: 4px; }
     .status-panel { flex-direction: column; align-items: flex-start; }
   }
 

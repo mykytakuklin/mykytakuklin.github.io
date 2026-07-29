@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-07-29",
+    "timestamp": "2026-07-29 09:32 UTC",
+    "passed": 29,
+    "failed": 0,
+    "duration": 23,
+    "report": "reports/2026-07-29T09-32-48/report.html"
+  },
+  {
     "date": "2026-07-28",
     "timestamp": "2026-07-28 12:05 UTC",
     "passed": 29,
@@ -30,21 +38,5 @@
     "failed": 0,
     "duration": 23,
     "report": "reports/2026-07-27T12-40-52/report.html"
-  },
-  {
-    "date": "2026-07-27",
-    "timestamp": "2026-07-27 12:24 UTC",
-    "passed": 29,
-    "failed": 0,
-    "duration": 21,
-    "report": "reports/2026-07-27T12-24-13.html"
-  },
-  {
-    "date": "2026-07-27",
-    "timestamp": "2026-07-27 12:17 UTC",
-    "passed": 29,
-    "failed": 0,
-    "duration": 23,
-    "report": "reports/2026-07-27T12-17-21.html"
   }
 ]

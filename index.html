@@ -22,6 +22,8 @@
     --pass-fg: #B6FFCE;
     --fail-bg: #24100B;
     --fail-fg: #FF5C33;
+    --info-bg: #222229;
+    --info-fg: #B2B2FF;
     --font-display: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
     --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     --radius-m: 16px;
@@ -200,12 +202,13 @@
     align-items: center;
   }
   .status-panel .counts b { font-weight: 700; }
-  .status-panel .counts .pass, .status-panel .counts .fail {
+  .status-panel .counts .pass, .status-panel .counts .fail, .status-panel .counts .streak {
     padding: 3px 10px;
     border-radius: 999px;
   }
   .status-panel .counts .pass { background: var(--pass-bg); color: var(--pass-fg); }
   .status-panel .counts .fail { background: var(--fail-bg); color: var(--fail-fg); }
+  .status-panel .counts .streak { background: var(--info-bg); color: var(--info-fg); font-weight: 700; }
   .status-panel .counts .muted { color: var(--muted); }
   .status-panel .cta {
     text-decoration: none;
@@ -369,11 +372,12 @@
 
     <div class="status-panel" id="status-panel">
       <div>
-        <div class="meta"><span class="dot"></span><span id="status-meta">Last run - 2026-07-27 13:33 UTC</span><span id="status-streak"></span></div>
+        <div class="meta"><span class="dot"></span><span id="status-meta">Last run - 2026-07-27 13:33 UTC</span></div>
         <div class="counts mono">
           <span class="pass" id="status-passed"><b>29</b> passed</span>
           <span class="fail" id="status-failed"><b>0</b> failed</span>
           <span class="muted" id="status-duration">21s</span>
+          <span class="streak" id="status-streak"></span>
         </div>
       </div>
       <a class="cta" id="status-report-link" href="#" target="_blank" rel="noopener">View latest report →</a>
@@ -500,8 +504,7 @@
       .then(function (res) { return res.ok ? res.json() : null; })
       .then(function (streak) {
         if (!streak || !streak.days) return;
-        var label = streak.days === 1 ? "1-day clean streak" : streak.days + "-day clean streak";
-        document.getElementById("status-streak").textContent = " · " + label;
+        document.getElementById("status-streak").textContent = streak.days + "-day streak";
       })
       .catch(function () { /* streak.json not published yet - skip silently */ });
   })();

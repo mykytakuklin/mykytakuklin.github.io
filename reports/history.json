@@ -1,6 +1,14 @@
 [
   {
     "date": "2026-07-29",
+    "timestamp": "2026-07-29 10:10 UTC",
+    "passed": 29,
+    "failed": 0,
+    "duration": 21,
+    "report": "reports/2026-07-29T10-10-51/report.html"
+  },
+  {
+    "date": "2026-07-29",
     "timestamp": "2026-07-29 10:01 UTC",
     "passed": 29,
     "failed": 0,
@@ -30,13 +38,5 @@
     "failed": 0,
     "duration": 23,
     "report": "reports/2026-07-29T09-32-48/report.html"
-  },
-  {
-    "date": "2026-07-28",
-    "timestamp": "2026-07-28 12:05 UTC",
-    "passed": 29,
-    "failed": 0,
-    "duration": 21,
-    "report": "reports/2026-07-28T12-05-56/report.html"
   }
 ]

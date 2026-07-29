@@ -369,7 +369,7 @@
 
     <div class="status-panel" id="status-panel">
       <div>
-        <div class="meta"><span class="dot"></span><span id="status-meta">Last run - 2026-07-27 13:33 UTC</span></div>
+        <div class="meta"><span class="dot"></span><span id="status-meta">Last run - 2026-07-27 13:33 UTC</span><span id="status-streak"></span></div>
         <div class="counts mono">
           <span class="pass" id="status-passed"><b>29</b> passed</span>
           <span class="fail" id="status-failed"><b>0</b> failed</span>
@@ -495,6 +495,15 @@
         document.getElementById("placeholder-note").remove();
       })
       .catch(function () { /* keep placeholder data if reports/history.json isn't published yet */ });
+
+    fetch("reports/streak.json", { cache: "no-store" })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (streak) {
+        if (!streak || !streak.days) return;
+        var label = streak.days === 1 ? "1-day clean streak" : streak.days + "-day clean streak";
+        document.getElementById("status-streak").textContent = " · " + label;
+      })
+      .catch(function () { /* streak.json not published yet - skip silently */ });
   })();
 </script>
 </body>

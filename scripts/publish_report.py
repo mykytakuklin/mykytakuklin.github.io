@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 
 REPORTS_DIR = "reports"
 HISTORY_PATH = os.path.join(REPORTS_DIR, "history.json")
+STREAK_PATH = os.path.join(REPORTS_DIR, "streak.json")
 MAX_HISTORY = 5
 
 
@@ -57,6 +58,24 @@ def main():
 
     with open(HISTORY_PATH, "w") as f:
         json.dump(history, f, indent=2)
+
+    update_streak(date_str, failed)
+
+
+def update_streak(date_str, failed):
+    streak = {"days": 0, "lastCountedDate": None}
+    if os.path.exists(STREAK_PATH):
+        with open(STREAK_PATH) as f:
+            streak = json.load(f)
+
+    if failed > 0:
+        streak["days"] = 0
+    elif streak["lastCountedDate"] != date_str:
+        streak["days"] += 1
+        streak["lastCountedDate"] = date_str
+
+    with open(STREAK_PATH, "w") as f:
+        json.dump(streak, f, indent=2)
 
 
 if __name__ == "__main__":

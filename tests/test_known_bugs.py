@@ -103,6 +103,7 @@ def test_known_bug_visual_user_burger_icon_has_visual_failure_class(page):
 
 def test_known_bug_problem_user_all_product_images_are_identical(page):
     login_as(page, PROBLEM_USER)
+    page.wait_for_selector(".inventory_item img")
     srcs = page.locator(".inventory_item img").evaluate_all("els => els.map(e => e.getAttribute('src'))")
     assert len(set(srcs)) == 1, "problem_user is expected to show the same placeholder image for every product (seeded demo bug)"
 

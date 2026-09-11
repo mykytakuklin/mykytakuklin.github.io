@@ -73,5 +73,5 @@ def test_view_product_details_page(logged_in_page):
 
 def test_add_to_cart_from_product_details_page(logged_in_page):
     logged_in_page.locator(".inventory_item_name").first.click()
-    logged_in_page.locator("button", has_text="Add to cart").click()
+    logged_in_page.locator(".inventory_details").get_by_role("button", name="Add to cart").click()
     expect(logged_in_page.locator(".shopping_cart_badge")).to_have_text("1")
